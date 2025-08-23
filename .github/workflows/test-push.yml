@@ -2,8 +2,8 @@ name: 测试定时推送功能
 
 on:
   schedule:
-    # 北京时间21:25执行（UTC 13:25）
-    - cron: '25 13 * * *'
+    # 北京时间21:52执行（UTC 13:52）
+    - cron: '52 13 * * *'
   workflow_dispatch:  # 支持手动触发测试
 
 permissions:
@@ -32,11 +32,21 @@ jobs:
         
     - name: 验证时间设置
       run: |
-        echo "UTC时间: $(date -u)"
-        echo "北京时间: $(TZ=Asia/Shanghai date)"
-        echo "预期执行时间: 北京时间21:25"
+        echo "=== GitHub Actions 时间验证 ==="
+        echo "UTC时间: $(date -u '+%Y-%m-%d %H:%M:%S')"
+        echo "北京时间: $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')"
+        echo "系统时区: $TZ"
+        echo "预期执行时间: 北京时间21:52"
+        echo "实际触发时间: $(TZ=Asia/Shanghai date '+%H:%M:%S')"
+        echo "GitHub Actions Cron设置: 52 13 * * * (UTC 13:52 = 北京时间 21:52)"
+        echo "当前工作目录: $(pwd)"
+        echo "文件列表:"
+        ls -la
+        echo "=== Python时间测试 ==="
+        python3 -c "import datetime; import os; print(f'Python UTC时间: {datetime.datetime.utcnow()}'); os.environ['TZ']='Asia/Shanghai'; import time; time.tzset(); print(f'Python北京时间: {datetime.datetime.now()}')"
+        echo "========================"
         
     - name: 执行测试推送
-      run: python weather.py
+      run: python DEMO.PY
       env:
         TZ: Asia/Shanghai
