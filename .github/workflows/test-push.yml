@@ -47,6 +47,6 @@ jobs:
         echo "========================"
         
     - name: 执行测试推送
-      run: python DEMO.PY
+      run: python weather.py
       env:
         TZ: Asia/Shanghai
