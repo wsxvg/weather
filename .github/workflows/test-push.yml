@@ -2,8 +2,8 @@ name: 测试定时推送功能
 
 on:
   schedule:
-    # 北京时间21:52执行（UTC 13:52）
-    - cron: '52 13 * * *'
+    # 北京时间21:55执行（UTC 13:55）
+    - cron: '55 13 * * *'
   workflow_dispatch:  # 支持手动触发测试
 
 permissions:
@@ -36,9 +36,9 @@ jobs:
         echo "UTC时间: $(date -u '+%Y-%m-%d %H:%M:%S')"
         echo "北京时间: $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')"
         echo "系统时区: $TZ"
-        echo "预期执行时间: 北京时间21:52"
+        echo "预期执行时间: 北京时间21:55"
         echo "实际触发时间: $(TZ=Asia/Shanghai date '+%H:%M:%S')"
-        echo "GitHub Actions Cron设置: 52 13 * * * (UTC 13:52 = 北京时间 21:52)"
+        echo "GitHub Actions Cron设置: 55 13 * * * (UTC 13:55 = 北京时间 21:55)"
         echo "当前工作目录: $(pwd)"
         echo "文件列表:"
         ls -la
